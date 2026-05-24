@@ -1,37 +1,110 @@
+--// ROBLOX MENU + KEY SYSTEM
+--// LocalScript
+
 local Players = game:GetService("Players")
 local TweenService = game:GetService("TweenService")
 
 local player = Players.LocalPlayer
 local PlayerGui = player:WaitForChild("PlayerGui")
 
+--==================================================
+-- KEY SYSTEM
+--==================================================
+
 local KEY = "mtdepzaivip36"
+
+--==================================================
+-- XÓA GUI CŨ
+--==================================================
 
 if PlayerGui:FindFirstChild("ModernKeyMenu") then
 	PlayerGui.ModernKeyMenu:Destroy()
 end
+
+--==================================================
+-- GUI
+--==================================================
 
 local gui = Instance.new("ScreenGui")
 gui.Name = "ModernKeyMenu"
 gui.ResetOnSpawn = false
 gui.Parent = PlayerGui
 
+--==================================================
+-- NÚT MENU ICON (FIX MOBILE IMAGE)
+--==================================================
+
 local toggle = Instance.new("ImageButton")
+toggle.Name = "MenuToggle"
 toggle.Parent = gui
+
 toggle.Size = UDim2.new(0,52,0,52)
 toggle.Position = UDim2.new(0,12,0.45,0)
 
 toggle.BackgroundColor3 = Color3.fromRGB(18,18,18)
+toggle.BackgroundTransparency = 0
+
 toggle.AutoButtonColor = false
+
+-- FIX ẢNH MOBILE
 toggle.Image = "rbxassetid://121818343044982"
+
+-- Fit ổn định hơn trên điện thoại
 toggle.ScaleType = Enum.ScaleType.Fit
-toggle.Visible = false
 
-Instance.new("UICorner", toggle).CornerRadius = UDim.new(0,12)
+-- giảm lỗi render mobile
+toggle.ResampleMode = Enum.ResamplerMode.Default
 
+-- hiện nút
+toggle.Visible = true
+
+-- tránh mất ảnh
+toggle.ClipsDescendants = true
+
+-- bo góc
+local toggleCorner = Instance.new("UICorner")
+toggleCorner.CornerRadius = UDim.new(0,12)
+toggleCorner.Parent = toggle
+
+-- viền đẹp
 local toggleStroke = Instance.new("UIStroke")
 toggleStroke.Parent = toggle
 toggleStroke.Color = Color3.fromRGB(100,70,170)
 toggleStroke.Thickness = 1.5
+
+-- shadow nhẹ
+local shadow = Instance.new("ImageLabel")
+shadow.Parent = toggle
+shadow.AnchorPoint = Vector2.new(0.5,0.5)
+shadow.Position = UDim2.new(0.5,0,0.5,2)
+shadow.Size = UDim2.new(1,8,1,8)
+
+shadow.BackgroundTransparency = 1
+shadow.Image = "rbxassetid://1316045217"
+shadow.ImageTransparency = 0.7
+shadow.ScaleType = Enum.ScaleType.Slice
+shadow.SliceCenter = Rect.new(10,10,118,118)
+shadow.ZIndex = 0
+
+toggle.ZIndex = 2
+
+--==================================================
+-- FIX MOBILE LOAD IMAGE
+--==================================================
+
+task.spawn(function()
+
+	task.wait(0.1)
+
+	toggle.Visible = false
+	task.wait(0.05)
+	toggle.Visible = true
+
+end)
+
+--==================================================
+-- HOVER PC
+--==================================================
 
 toggle.MouseEnter:Connect(function()
 
@@ -48,6 +121,10 @@ toggle.MouseLeave:Connect(function()
 	}):Play()
 
 end)
+
+--==================================================
+-- KEY FRAME
+--==================================================
 
 local keyFrame = Instance.new("Frame")
 keyFrame.Parent = gui
@@ -105,6 +182,10 @@ checkButton.TextSize = 15
 
 Instance.new("UICorner", checkButton).CornerRadius = UDim.new(0,8)
 
+--==================================================
+-- INTRO
+--==================================================
+
 local intro = Instance.new("Frame")
 intro.Parent = gui
 intro.Size = UDim2.new(0,340,0,180)
@@ -150,6 +231,9 @@ continueButton.TextSize = 15
 
 Instance.new("UICorner", continueButton).CornerRadius = UDim.new(0,10)
 
+--==================================================
+-- MAIN MENU
+--==================================================
 
 local main = Instance.new("Frame")
 main.Parent = gui
@@ -166,6 +250,9 @@ mainStroke.Parent = main
 mainStroke.Color = Color3.fromRGB(125,85,255)
 mainStroke.Thickness = 1.8
 
+--==================================================
+-- SIDE MENU
+--==================================================
 
 local side = Instance.new("Frame")
 side.Parent = main
@@ -185,6 +272,10 @@ title.TextSize = 22
 title.Font = Enum.Font.GothamBlack
 title.TextXAlignment = Enum.TextXAlignment.Left
 
+--==================================================
+-- CONTENT
+--==================================================
+
 local content = Instance.new("Frame")
 content.Parent = main
 content.Position = UDim2.new(0,130,0,0)
@@ -195,24 +286,76 @@ content.BorderSizePixel = 0
 
 Instance.new("UICorner", content).CornerRadius = UDim.new(0,12)
 
-local bgImage = Instance.new("ImageLabel")
-bgImage.Parent = content
-bgImage.Size = UDim2.new(1,0,1,0)
-bgImage.BackgroundTransparency = 1
-bgImage.Image = "rbxassetid://72093801276619"
-bgImage.ImageTransparency = 0.55
-bgImage.ScaleType = Enum.ScaleType.Crop
+--==================================================
+-- BACKGROUND IMAGE (FIX MOBILE)
+--==================================================
 
-Instance.new("UICorner", bgImage).CornerRadius = UDim.new(0,12)
+local bgImage = Instance.new("ImageLabel")
+bgImage.Name = "BackgroundImage"
+bgImage.Parent = content
+
+-- dùng full scale để mobile không bị lỗi
+bgImage.AnchorPoint = Vector2.new(0.5,0.5)
+bgImage.Position = UDim2.new(0.5,0,0.5,0)
+
+bgImage.Size = UDim2.new(1,0,1,0)
+
+bgImage.BackgroundTransparency = 1
+
+-- FIX: thêm prefix rbxassetid:// chuẩn
+bgImage.Image = "rbxassetid://72093801276619"
+
+-- độ mờ ảnh
+bgImage.ImageTransparency = 0.35
+
+-- FIX QUAN TRỌNG CHO MOBILE
+bgImage.ScaleType = Enum.ScaleType.Fit
+
+-- tránh ảnh load chậm trên điện thoại
+bgImage.ResampleMode = Enum.ResamplerMode.Default
+
+-- bo góc
+local bgCorner = Instance.new("UICorner")
+bgCorner.CornerRadius = UDim.new(0,12)
+bgCorner.Parent = bgImage
+
+--==================================================
+-- DARK OVERLAY
+--==================================================
 
 local darkOverlay = Instance.new("Frame")
+darkOverlay.Name = "DarkOverlay"
 darkOverlay.Parent = content
+
+darkOverlay.AnchorPoint = Vector2.new(0.5,0.5)
+darkOverlay.Position = UDim2.new(0.5,0,0.5,0)
+
 darkOverlay.Size = UDim2.new(1,0,1,0)
+
 darkOverlay.BackgroundColor3 = Color3.fromRGB(0,0,0)
-darkOverlay.BackgroundTransparency = 0.35
+darkOverlay.BackgroundTransparency = 0.45
 darkOverlay.BorderSizePixel = 0
 
-Instance.new("UICorner", darkOverlay).CornerRadius = UDim.new(0,12)
+local overlayCorner = Instance.new("UICorner")
+overlayCorner.CornerRadius = UDim.new(0,12)
+overlayCorner.Parent = darkOverlay
+
+--==================================================
+-- FIX MOBILE RENDER
+--==================================================
+
+content.ClipsDescendants = true
+
+-- ép render lại trên điện thoại
+task.wait()
+
+bgImage.Visible = false
+task.wait(0.05)
+bgImage.Visible = true
+
+--==================================================
+-- TAB SYSTEM
+--==================================================
 
 local tabs = {}
 
@@ -283,9 +426,17 @@ local function createTab(name,y)
 	return page
 end
 
+--==================================================
+-- CREATE TABS
+--==================================================
+
 local mainTab = createTab("🏠 Main",85)
 local utilsTab = createTab("⚡ Player",125)
 local settingsTab = createTab("⚙ Settings",45)
+
+--==================================================
+-- BUTTON CREATOR
+--==================================================
 
 local function createButton(parent,text,y,callback)
 
@@ -347,6 +498,10 @@ local function createButton(parent,text,y,callback)
 	return btn
 end
 
+--==================================================
+-- MAIN TAB
+--==================================================
+
 createButton(mainTab,"AirFlow Hub",48,function()
 
 	print("AirFlow Hub Script")
@@ -366,16 +521,16 @@ createButton(mainTab,"LunarZ Hub",128,function()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/LunarZR/bomba/refs/heads/main/AOTR1"))()
 end)
 
-createButton(mainTab,"Titanic Hub",168,function()
+createButton(mainTab,"Tekkit Hub",168,function()
 
-        print("Titanic Hub Script")
-loadstring(game:HttpGet("https://raw.githubusercontent.com/TITANIC-HUB/THUB/main/Loader.lua"))()
+        print("Tekkit Hub Script")
+loadstring(game:HttpGet("https://pastebin.com/raw/qcucSQdE"))()
 end)
 
 createButton(mainTab,"kira Hub",208,function()
 
         print("kira Hub Script")
-loadstring(game:HttpGet('https://raw.githubusercontent.com/ans974829-star/KiraScripts/refs/heads/main/Attack%20On%20Titan%20%3A%20Revolution'))()
+loadstring(game:HttpGet('https://raw.githubusercontent.com/Bubu2k/script/refs/heads/main/kira'))()
 end)
 
 createButton(mainTab,"Axon Hub",248,function()
@@ -389,6 +544,10 @@ createButton(mainTab,"Best AoTR Hub",268,function()
         print("Best AoTR Hub Script")
 loadstring(game:HttpGet(('https://pastefy.app/jIAPA2zS/raw'),true))()
 end)
+
+--==================================================
+-- UTILS TAB
+--==================================================
 
 local lowGraphics = false
 local savedMaterials = {}
@@ -483,6 +642,9 @@ end)
 local antiAFK = false
 local antiAFKConnection
 
+--==================================================
+-- NOTIFICATION ĐẸP (NHỎ + FADE + BO GÓC)
+--==================================================
 local function showTopNotification(text)
 
 	local player = game.Players.LocalPlayer
@@ -524,12 +686,14 @@ local function showTopNotification(text)
 	label.TextTransparency = 1
 	label.Parent = frame
 
+	-- FADE IN
 	for i = 1, 10 do
 		frame.BackgroundTransparency = 1 - (i * 0.1)
 		label.TextTransparency = 1 - (i * 0.1)
 		task.wait(0.01)
 	end
 
+	-- AUTO DELETE SAU 2 GIÂY (FADE OUT)
 	task.delay(2, function()
 		for i = 1, 10 do
 			frame.BackgroundTransparency = i * 0.1
@@ -540,6 +704,9 @@ local function showTopNotification(text)
 	end)
 end
 
+--==================================================
+-- BẬT ANTI AFK
+--==================================================
 local function enableAntiAFK()
 
 	if antiAFK then return end
@@ -558,6 +725,9 @@ local function enableAntiAFK()
 	print("Anti AFK ON")
 end
 
+--==================================================
+-- TẮT ANTI AFK
+--==================================================
 local function disableAntiAFK()
 
 	if antiAFKConnection then
@@ -571,6 +741,9 @@ local function disableAntiAFK()
 	print("Anti AFK OFF")
 end
 
+--==================================================
+-- NÚT BẤM
+--==================================================
 createButton(utilsTab, "Chống AFK", 50, function()
 
 	if antiAFK then
@@ -581,8 +754,15 @@ createButton(utilsTab, "Chống AFK", 50, function()
 
 end)
 
+--==================================================
+-- AUTO BẬT KHI VÀO GAME
+--==================================================
 task.wait(2)
 enableAntiAFK()
+
+--==================================================
+-- GIỚI THIỆU (HIỂN THỊ TRONG MENU)
+--==================================================
 
 local function createIntro()
 
@@ -627,11 +807,19 @@ local function createIntro()
 	text.TextSize = 14
 end
 
+-- chạy luôn khi mở settings tab
 createIntro()
+
+--==================================================
+-- DEFAULT TAB
+--==================================================
 
 mainTab.Visible = true
 tabs["🏠 Main"].Button.BackgroundColor3 = Color3.fromRGB(90,60,150)
 
+--==================================================
+-- TOGGLE MENU
+--==================================================
 
 toggle.MouseButton1Click:Connect(function()
 
@@ -650,6 +838,10 @@ toggle.MouseButton1Click:Connect(function()
 	main.Visible = opened
 
 end)
+
+--==================================================
+-- CHECK KEY
+--==================================================
 
 checkButton.MouseButton1Click:Connect(function()
 
@@ -671,6 +863,10 @@ checkButton.MouseButton1Click:Connect(function()
 	end
 
 end)
+
+--==================================================
+-- CONTINUE
+--==================================================
 
 continueButton.MouseButton1Click:Connect(function()
 
