@@ -31,8 +31,10 @@ gui.ResetOnSpawn = false
 gui.Parent = PlayerGui
 
 --==================================================
--- NÚT MENU ICON (FIX MOBILE IMAGE)
+-- NÚT MENU ICON (FIX MOBILE)
 --==================================================
+
+local ContentProvider = game:GetService("ContentProvider")
 
 local toggle = Instance.new("ImageButton")
 toggle.Name = "MenuToggle"
@@ -42,63 +44,44 @@ toggle.Size = UDim2.new(0,52,0,52)
 toggle.Position = UDim2.new(0,12,0.45,0)
 
 toggle.BackgroundColor3 = Color3.fromRGB(18,18,18)
-toggle.BackgroundTransparency = 0
-
 toggle.AutoButtonColor = false
 
--- FIX ẢNH MOBILE
 toggle.Image = "rbxassetid://121818343044982"
 
--- Fit ổn định hơn trên điện thoại
-toggle.ScaleType = Enum.ScaleType.Fit
+-- preload icon
+pcall(function()
+	ContentProvider:PreloadAsync({toggle})
+end)
 
--- giảm lỗi render mobile
-toggle.ResampleMode = Enum.ResamplerMode.Default
+toggle.ImageTransparency = 0
 
--- hiện nút
+-- FIX MOBILE
+toggle.ScaleType = Enum.ScaleType.Stretch
+toggle.ResampleMode = Enum.ResamplerMode.Pixelated
+
 toggle.Visible = true
 
--- tránh mất ảnh
-toggle.ClipsDescendants = true
-
--- bo góc
 local toggleCorner = Instance.new("UICorner")
 toggleCorner.CornerRadius = UDim.new(0,12)
 toggleCorner.Parent = toggle
 
--- viền đẹp
 local toggleStroke = Instance.new("UIStroke")
 toggleStroke.Parent = toggle
 toggleStroke.Color = Color3.fromRGB(100,70,170)
 toggleStroke.Thickness = 1.5
 
--- shadow nhẹ
-local shadow = Instance.new("ImageLabel")
-shadow.Parent = toggle
-shadow.AnchorPoint = Vector2.new(0.5,0.5)
-shadow.Position = UDim2.new(0.5,0,0.5,2)
-shadow.Size = UDim2.new(1,8,1,8)
-
-shadow.BackgroundTransparency = 1
-shadow.Image = "rbxassetid://1316045217"
-shadow.ImageTransparency = 0.7
-shadow.ScaleType = Enum.ScaleType.Slice
-shadow.SliceCenter = Rect.new(10,10,118,118)
-shadow.ZIndex = 0
-
-toggle.ZIndex = 2
-
 --==================================================
--- FIX MOBILE LOAD IMAGE
+-- FORCE REFRESH MOBILE
 --==================================================
 
 task.spawn(function()
 
-	task.wait(0.1)
+	task.wait(0.5)
 
-	toggle.Visible = false
-	task.wait(0.05)
-	toggle.Visible = true
+	toggle.Image = ""
+	task.wait()
+
+	toggle.Image = "rbxassetid://121818343044982"
 
 end)
 
@@ -290,46 +273,40 @@ Instance.new("UICorner", content).CornerRadius = UDim.new(0,12)
 -- BACKGROUND IMAGE (FIX MOBILE)
 --==================================================
 
+local ContentProvider = game:GetService("ContentProvider")
+
 local bgImage = Instance.new("ImageLabel")
 bgImage.Name = "BackgroundImage"
 bgImage.Parent = content
 
--- dùng full scale để mobile không bị lỗi
 bgImage.AnchorPoint = Vector2.new(0.5,0.5)
 bgImage.Position = UDim2.new(0.5,0,0.5,0)
-
 bgImage.Size = UDim2.new(1,0,1,0)
 
 bgImage.BackgroundTransparency = 1
-
--- FIX: thêm prefix rbxassetid:// chuẩn
 bgImage.Image = "rbxassetid://72093801276619"
 
--- độ mờ ảnh
-bgImage.ImageTransparency = 0.35
+-- preload ảnh
+pcall(function()
+	ContentProvider:PreloadAsync({bgImage})
+end)
 
--- FIX QUAN TRỌNG CHO MOBILE
-bgImage.ScaleType = Enum.ScaleType.Fit
+bgImage.ImageTransparency = 0.4
 
--- tránh ảnh load chậm trên điện thoại
-bgImage.ResampleMode = Enum.ResamplerMode.Default
+-- FIX MOBILE
+bgImage.ScaleType = Enum.ScaleType.Stretch
+bgImage.ResampleMode = Enum.ResamplerMode.Pixelated
 
--- bo góc
 local bgCorner = Instance.new("UICorner")
 bgCorner.CornerRadius = UDim.new(0,12)
 bgCorner.Parent = bgImage
 
 --==================================================
--- DARK OVERLAY
+-- OVERLAY
 --==================================================
 
 local darkOverlay = Instance.new("Frame")
-darkOverlay.Name = "DarkOverlay"
 darkOverlay.Parent = content
-
-darkOverlay.AnchorPoint = Vector2.new(0.5,0.5)
-darkOverlay.Position = UDim2.new(0.5,0,0.5,0)
-
 darkOverlay.Size = UDim2.new(1,0,1,0)
 
 darkOverlay.BackgroundColor3 = Color3.fromRGB(0,0,0)
@@ -341,17 +318,19 @@ overlayCorner.CornerRadius = UDim.new(0,12)
 overlayCorner.Parent = darkOverlay
 
 --==================================================
--- FIX MOBILE RENDER
+-- FORCE REFRESH MOBILE
 --==================================================
 
-content.ClipsDescendants = true
+task.spawn(function()
 
--- ép render lại trên điện thoại
-task.wait()
+	task.wait(0.5)
 
-bgImage.Visible = false
-task.wait(0.05)
-bgImage.Visible = true
+	bgImage.Image = ""
+	task.wait()
+
+	bgImage.Image = "rbxassetid://72093801276619"
+
+end)
 
 --==================================================
 -- TAB SYSTEM
