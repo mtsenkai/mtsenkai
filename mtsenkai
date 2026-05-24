@@ -1,38 +1,18 @@
---// ROBLOX MENU + KEY SYSTEM
---// LocalScript
-
 local Players = game:GetService("Players")
 local TweenService = game:GetService("TweenService")
 
 local player = Players.LocalPlayer
 local PlayerGui = player:WaitForChild("PlayerGui")
-
---==================================================
--- KEY SYSTEM
---==================================================
-
 local KEY = "mtdepzaivip36"
-
---==================================================
--- XÓA GUI CŨ
---==================================================
 
 if PlayerGui:FindFirstChild("ModernKeyMenu") then
 	PlayerGui.ModernKeyMenu:Destroy()
 end
 
---==================================================
--- GUI
---==================================================
-
 local gui = Instance.new("ScreenGui")
 gui.Name = "ModernKeyMenu"
 gui.ResetOnSpawn = false
 gui.Parent = PlayerGui
-
---==================================================
--- NÚT MENU ICON (FIX MOBILE)
---==================================================
 
 local ContentProvider = game:GetService("ContentProvider")
 
@@ -48,14 +28,12 @@ toggle.AutoButtonColor = false
 
 toggle.Image = "rbxassetid://121818343044982"
 
--- preload icon
 pcall(function()
 	ContentProvider:PreloadAsync({toggle})
 end)
 
 toggle.ImageTransparency = 0
 
--- FIX MOBILE
 toggle.ScaleType = Enum.ScaleType.Stretch
 toggle.ResampleMode = Enum.ResamplerMode.Pixelated
 
@@ -70,10 +48,6 @@ toggleStroke.Parent = toggle
 toggleStroke.Color = Color3.fromRGB(100,70,170)
 toggleStroke.Thickness = 1.5
 
---==================================================
--- FORCE REFRESH MOBILE
---==================================================
-
 task.spawn(function()
 
 	task.wait(0.5)
@@ -84,10 +58,6 @@ task.spawn(function()
 	toggle.Image = "rbxassetid://121818343044982"
 
 end)
-
---==================================================
--- HOVER PC
---==================================================
 
 toggle.MouseEnter:Connect(function()
 
@@ -104,10 +74,6 @@ toggle.MouseLeave:Connect(function()
 	}):Play()
 
 end)
-
---==================================================
--- KEY FRAME
---==================================================
 
 local keyFrame = Instance.new("Frame")
 keyFrame.Parent = gui
@@ -165,10 +131,6 @@ checkButton.TextSize = 15
 
 Instance.new("UICorner", checkButton).CornerRadius = UDim.new(0,8)
 
---==================================================
--- INTRO
---==================================================
-
 local intro = Instance.new("Frame")
 intro.Parent = gui
 intro.Size = UDim2.new(0,340,0,180)
@@ -214,10 +176,6 @@ continueButton.TextSize = 15
 
 Instance.new("UICorner", continueButton).CornerRadius = UDim.new(0,10)
 
---==================================================
--- MAIN MENU
---==================================================
-
 local main = Instance.new("Frame")
 main.Parent = gui
 main.Size = UDim2.new(0,430,0,260)
@@ -232,10 +190,6 @@ local mainStroke = Instance.new("UIStroke")
 mainStroke.Parent = main
 mainStroke.Color = Color3.fromRGB(125,85,255)
 mainStroke.Thickness = 1.8
-
---==================================================
--- SIDE MENU
---==================================================
 
 local side = Instance.new("Frame")
 side.Parent = main
@@ -255,10 +209,6 @@ title.TextSize = 22
 title.Font = Enum.Font.GothamBlack
 title.TextXAlignment = Enum.TextXAlignment.Left
 
---==================================================
--- CONTENT
---==================================================
-
 local content = Instance.new("Frame")
 content.Parent = main
 content.Position = UDim2.new(0,130,0,0)
@@ -268,10 +218,6 @@ content.BackgroundColor3 = Color3.fromRGB(8,8,8)
 content.BorderSizePixel = 0
 
 Instance.new("UICorner", content).CornerRadius = UDim.new(0,12)
-
---==================================================
--- BACKGROUND IMAGE (FIX MOBILE)
---==================================================
 
 local ContentProvider = game:GetService("ContentProvider")
 
@@ -286,24 +232,18 @@ bgImage.Size = UDim2.new(1,0,1,0)
 bgImage.BackgroundTransparency = 1
 bgImage.Image = "rbxassetid://72093801276619"
 
--- preload ảnh
 pcall(function()
 	ContentProvider:PreloadAsync({bgImage})
 end)
 
 bgImage.ImageTransparency = 0.4
 
--- FIX MOBILE
 bgImage.ScaleType = Enum.ScaleType.Stretch
 bgImage.ResampleMode = Enum.ResamplerMode.Pixelated
 
 local bgCorner = Instance.new("UICorner")
 bgCorner.CornerRadius = UDim.new(0,12)
 bgCorner.Parent = bgImage
-
---==================================================
--- OVERLAY
---==================================================
 
 local darkOverlay = Instance.new("Frame")
 darkOverlay.Parent = content
@@ -317,10 +257,6 @@ local overlayCorner = Instance.new("UICorner")
 overlayCorner.CornerRadius = UDim.new(0,12)
 overlayCorner.Parent = darkOverlay
 
---==================================================
--- FORCE REFRESH MOBILE
---==================================================
-
 task.spawn(function()
 
 	task.wait(0.5)
@@ -331,10 +267,6 @@ task.spawn(function()
 	bgImage.Image = "rbxassetid://72093801276619"
 
 end)
-
---==================================================
--- TAB SYSTEM
---==================================================
 
 local tabs = {}
 
@@ -353,7 +285,6 @@ local function createTab(name,y)
 
 	Instance.new("UICorner", button).CornerRadius = UDim.new(0,8)
 
-	-- PAGE SCROLL
 	local page = Instance.new("ScrollingFrame")
 	page.Parent = content
 	page.Size = UDim2.new(1,0,1,0)
@@ -367,7 +298,6 @@ local function createTab(name,y)
 
 	page.Visible = false
 
-	-- tự sắp xếp button
 	local layout = Instance.new("UIListLayout")
 	layout.Parent = page
 	layout.Padding = UDim.new(0,8)
@@ -405,17 +335,9 @@ local function createTab(name,y)
 	return page
 end
 
---==================================================
--- CREATE TABS
---==================================================
-
 local mainTab = createTab("🏠 Main",85)
 local utilsTab = createTab("⚡ Player",125)
 local settingsTab = createTab("⚙ Settings",45)
-
---==================================================
--- BUTTON CREATOR
---==================================================
 
 local function createButton(parent,text,y,callback)
 
@@ -477,10 +399,6 @@ local function createButton(parent,text,y,callback)
 	return btn
 end
 
---==================================================
--- MAIN TAB
---==================================================
-
 createButton(mainTab,"AirFlow Hub",48,function()
 
 	print("AirFlow Hub Script")
@@ -500,16 +418,16 @@ createButton(mainTab,"LunarZ Hub",128,function()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/LunarZR/bomba/refs/heads/main/AOTR1"))()
 end)
 
-createButton(mainTab,"Tekkit Hub",168,function()
+createButton(mainTab,"Titanic Hub",168,function()
 
-        print("Tekkit Hub Script")
-loadstring(game:HttpGet("https://pastebin.com/raw/qcucSQdE"))()
+        print("Titanic Hub Script")
+loadstring(game:HttpGet("https://raw.githubusercontent.com/TITANIC-HUB/THUB/main/Loader.lua"))()
 end)
 
 createButton(mainTab,"kira Hub",208,function()
 
         print("kira Hub Script")
-loadstring(game:HttpGet('https://raw.githubusercontent.com/Bubu2k/script/refs/heads/main/kira'))()
+loadstring(game:HttpGet('https://raw.githubusercontent.com/ans974829-star/KiraScripts/refs/heads/main/Attack%20On%20Titan%20%3A%20Revolution'))()
 end)
 
 createButton(mainTab,"Axon Hub",248,function()
@@ -524,9 +442,11 @@ createButton(mainTab,"Best AoTR Hub",268,function()
 loadstring(game:HttpGet(('https://pastefy.app/jIAPA2zS/raw'),true))()
 end)
 
---==================================================
--- UTILS TAB
---==================================================
+createButton(mainTab,"Lix Hub",308,function()
+         
+        print("Lix Hub Script")
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Lixtron/Hub/refs/heads/main/loader"))() 
+end)
 
 local lowGraphics = false
 local savedMaterials = {}
@@ -537,14 +457,12 @@ createButton(utilsTab,"Giảm Độ Họa",48,function()
 
 	if lowGraphics then
 
-		-- lighting
 		game.Lighting.GlobalShadows = false
 		game.Lighting.FogEnd = 100000
 		settings().Rendering.QualityLevel = Enum.QualityLevel.Level01
 
 		for _,v in pairs(workspace:GetDescendants()) do
 
-			-- hiệu ứng
 			if v:IsA("ParticleEmitter")
 			or v:IsA("Trail")
 			or v:IsA("Smoke")
@@ -554,21 +472,18 @@ createButton(utilsTab,"Giảm Độ Họa",48,function()
 				v.Enabled = false
 			end
 
-			-- texture
 			if v:IsA("Texture")
 			or v:IsA("Decal") then
 
 				v.Transparency = 1
 			end
 
-			-- mesh
 			if v:IsA("SpecialMesh") then
 
 				v.TextureId = ""
 
 			end
 
-			-- part
 			if v:IsA("BasePart") then
 
 				savedMaterials[v] = v.Material
@@ -621,9 +536,6 @@ end)
 local antiAFK = false
 local antiAFKConnection
 
---==================================================
--- NOTIFICATION ĐẸP (NHỎ + FADE + BO GÓC)
---==================================================
 local function showTopNotification(text)
 
 	local player = game.Players.LocalPlayer
@@ -665,14 +577,12 @@ local function showTopNotification(text)
 	label.TextTransparency = 1
 	label.Parent = frame
 
-	-- FADE IN
 	for i = 1, 10 do
 		frame.BackgroundTransparency = 1 - (i * 0.1)
 		label.TextTransparency = 1 - (i * 0.1)
 		task.wait(0.01)
 	end
 
-	-- AUTO DELETE SAU 2 GIÂY (FADE OUT)
 	task.delay(2, function()
 		for i = 1, 10 do
 			frame.BackgroundTransparency = i * 0.1
@@ -683,9 +593,6 @@ local function showTopNotification(text)
 	end)
 end
 
---==================================================
--- BẬT ANTI AFK
---==================================================
 local function enableAntiAFK()
 
 	if antiAFK then return end
@@ -704,9 +611,6 @@ local function enableAntiAFK()
 	print("Anti AFK ON")
 end
 
---==================================================
--- TẮT ANTI AFK
---==================================================
 local function disableAntiAFK()
 
 	if antiAFKConnection then
@@ -720,9 +624,6 @@ local function disableAntiAFK()
 	print("Anti AFK OFF")
 end
 
---==================================================
--- NÚT BẤM
---==================================================
 createButton(utilsTab, "Chống AFK", 50, function()
 
 	if antiAFK then
@@ -733,20 +634,13 @@ createButton(utilsTab, "Chống AFK", 50, function()
 
 end)
 
---==================================================
--- AUTO BẬT KHI VÀO GAME
---==================================================
 task.wait(2)
 enableAntiAFK()
-
---==================================================
--- GIỚI THIỆU (HIỂN THỊ TRONG MENU)
---==================================================
 
 local function createIntro()
 
 	local info = Instance.new("Frame")
-	info.Parent = settingsTab -- ⭐ QUAN TRỌNG: gắn vào tab menu
+	info.Parent = settingsTab 
 	info.Size = UDim2.new(1, 0, 1, 0)
 	info.Position = UDim2.new(0, 0, 0, 0)
 
@@ -786,19 +680,10 @@ local function createIntro()
 	text.TextSize = 14
 end
 
--- chạy luôn khi mở settings tab
 createIntro()
-
---==================================================
--- DEFAULT TAB
---==================================================
 
 mainTab.Visible = true
 tabs["🏠 Main"].Button.BackgroundColor3 = Color3.fromRGB(90,60,150)
-
---==================================================
--- TOGGLE MENU
---==================================================
 
 toggle.MouseButton1Click:Connect(function()
 
@@ -817,10 +702,6 @@ toggle.MouseButton1Click:Connect(function()
 	main.Visible = opened
 
 end)
-
---==================================================
--- CHECK KEY
---==================================================
 
 checkButton.MouseButton1Click:Connect(function()
 
@@ -842,10 +723,6 @@ checkButton.MouseButton1Click:Connect(function()
 	end
 
 end)
-
---==================================================
--- CONTINUE
---==================================================
 
 continueButton.MouseButton1Click:Connect(function()
 
