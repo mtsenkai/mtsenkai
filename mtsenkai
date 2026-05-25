@@ -429,7 +429,7 @@ end
 
 local mainTab = createTab("🏠 Main",85)
 local utilsTab = createTab("⚡ Player",125)
-local settingsTab = createTab("⚙ Setting",45)
+local settingsTab = createTab("⚙ Settings",45)
 
 local function createButton(parent,text,y,callback)
 
