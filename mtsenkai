@@ -5,6 +5,55 @@ local player = Players.LocalPlayer
 local PlayerGui = player:WaitForChild("PlayerGui")
 local KEY = "mtdepzaivip36"
 
+local KEY_SAVE = "MTSENKAI_KEYTIME"
+
+local VALID_TIME = 25 * 60
+
+local HttpService = game:GetService("HttpService")
+
+local function saveKeyTime()
+
+	local data = {
+		expire = os.time() + VALID_TIME
+	}
+
+	if writefile then
+		writefile(KEY_SAVE..".txt", HttpService:JSONEncode(data))
+	end
+
+end
+
+local function getKeyTime()
+
+	if not isfile then
+		return 0
+	end
+
+	if not isfile(KEY_SAVE..".txt") then
+		return 0
+	end
+
+	local success,data = pcall(function()
+
+		return HttpService:JSONDecode(
+			readfile(KEY_SAVE..".txt")
+		)
+
+	end)
+
+	if success and data.expire then
+		return data.expire
+	end
+
+	return 0
+end
+
+local function keyStillValid()
+
+	return os.time() < getKeyTime()
+
+end
+
 if PlayerGui:FindFirstChild("ModernKeyMenu") then
 	PlayerGui.ModernKeyMenu:Destroy()
 end
@@ -14,6 +63,7 @@ gui.Name = "ModernKeyMenu"
 gui.ResetOnSpawn = false
 gui.Parent = PlayerGui
 
+local TweenService = game:GetService("TweenService")
 local ContentProvider = game:GetService("ContentProvider")
 
 local toggle = Instance.new("ImageButton")
@@ -25,8 +75,13 @@ toggle.Position = UDim2.new(0,12,0.45,0)
 
 toggle.BackgroundColor3 = Color3.fromRGB(18,18,18)
 toggle.AutoButtonColor = false
+toggle.BorderSizePixel = 0
 
 toggle.Image = "rbxassetid://121818343044982"
+
+toggle.Active = true
+toggle.Selectable = true
+toggle.ZIndex = 999
 
 pcall(function()
 	ContentProvider:PreloadAsync({toggle})
@@ -36,8 +91,6 @@ toggle.ImageTransparency = 0
 
 toggle.ScaleType = Enum.ScaleType.Stretch
 toggle.ResampleMode = Enum.ResamplerMode.Pixelated
-
-toggle.Visible = true
 
 local toggleCorner = Instance.new("UICorner")
 toggleCorner.CornerRadius = UDim.new(0,12)
@@ -208,6 +261,45 @@ title.TextColor3 = Color3.fromRGB(210,180,255)
 title.TextSize = 22
 title.Font = Enum.Font.GothamBlack
 title.TextXAlignment = Enum.TextXAlignment.Left
+
+local keyTimer = Instance.new("TextLabel")
+keyTimer.Parent = side
+keyTimer.Size = UDim2.new(1,-10,0,20)
+keyTimer.Position = UDim2.new(0,5,1,-25)
+
+keyTimer.BackgroundTransparency = 1
+
+keyTimer.TextColor3 = Color3.fromRGB(170,170,170)
+keyTimer.Font = Enum.Font.Gotham
+keyTimer.TextSize = 11
+
+task.spawn(function()
+
+	while true do
+
+		local remain = getKeyTime() - os.time()
+
+		if remain > 0 then
+
+			local minutes = math.floor(remain / 60)
+			local seconds = remain % 60
+
+			keyTimer.Text =
+				"Nhập lại key sau: "
+				..minutes.."m "
+				..seconds.."s"
+
+		else
+
+			keyTimer.Text = "Key đã hết hạn"
+
+		end
+
+		task.wait(1)
+
+	end
+
+end)
 
 local content = Instance.new("Frame")
 content.Parent = main
@@ -685,7 +777,23 @@ createIntro()
 mainTab.Visible = true
 tabs["🏠 Main"].Button.BackgroundColor3 = Color3.fromRGB(90,60,150)
 
-toggle.MouseButton1Click:Connect(function()
+--==================================================
+-- TOGGLE MENU FIXED
+--==================================================
+
+local opened = true
+
+toggle.Visible = keyStillValid()
+
+local debounce = false
+
+local function toggleMenu()
+
+	if debounce then
+		return
+	end
+
+	debounce = true
 
 	opened = not opened
 
@@ -701,11 +809,19 @@ toggle.MouseButton1Click:Connect(function()
 
 	main.Visible = opened
 
-end)
+	task.wait(0.1)
+
+	debounce = false
+
+end
+
+toggle.MouseButton1Click:Connect(toggleMenu)
 
 checkButton.MouseButton1Click:Connect(function()
 
 	if keyBox.Text == KEY then
+
+		saveKeyTime()
 
 		status.Text = "key đúng rồi!"
 		status.TextColor3 = Color3.fromRGB(0,255,100)
@@ -723,12 +839,32 @@ checkButton.MouseButton1Click:Connect(function()
 	end
 
 end)
+local title = Instance.new("TextLabel")
 
 continueButton.MouseButton1Click:Connect(function()
 
 	intro.Visible = false
 
-	toggle.Visible = true
+	opened = true
+
 	main.Visible = true
+	toggle.Visible = true
 
 end)
+
+if keyStillValid() then
+
+	keyFrame.Visible = false
+	intro.Visible = false
+
+	main.Visible = true
+	toggle.Visible = true
+
+else
+
+	keyFrame.Visible = true
+
+	main.Visible = false
+	toggle.Visible = false
+
+end
