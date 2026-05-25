@@ -7,7 +7,7 @@ local KEY = "mtdepzaivip36"
 
 local KEY_SAVE = "MTSENKAI_KEYTIME"
 
-local VALID_TIME = 30 * 60
+local VALID_TIME = 25 * 60
 
 local HttpService = game:GetService("HttpService")
 
@@ -285,7 +285,7 @@ task.spawn(function()
 			local seconds = remain % 60
 
 			keyTimer.Text =
-				"Key còn lại: "
+				"Nhập lại key sau: "
 				..minutes.."m "
 				..seconds.."s"
 
@@ -765,7 +765,7 @@ local function createIntro()
 
 		"- Script tổng hợp các bản Attack on Titan.\n" ..
 		"- Update Key New Vào Tuần Sau.\n" ..
-		"Sài thông minh để không bị band shadow nha.\n" ..
+		" https://discord.gg/9YFPhZbwmD"
 
 	text.TextColor3 = Color3.new(1,1,1)
 	text.Font = Enum.Font.Gotham
