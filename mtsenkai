@@ -7,7 +7,7 @@ local KEY = "mtdepzaivip36"
 
 local KEY_SAVE = "MTSENKAI_KEYTIME"
 
-local VALID_TIME = 25 * 60
+local VALID_TIME = 30 * 60
 
 local HttpService = game:GetService("HttpService")
 
@@ -765,8 +765,9 @@ local function createIntro()
 
 		"- Script tổng hợp các bản Attack on Titan.\n" ..
 		"- Update Key New Vào Tuần Sau.\n" ..
-		" https://discord.gg/9YFPhZbwmD"
-
+		" Cách sài không band shadow"
+        "GIẢM TỐC ĐỘ BAY THẤP NHẤT"
+        "GIẢM TỐC ĐÁNH VÀ ĐỘ CAO KHI ĐÁNH"
 	text.TextColor3 = Color3.new(1,1,1)
 	text.Font = Enum.Font.Gotham
 	text.TextSize = 14
