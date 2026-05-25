@@ -285,7 +285,7 @@ task.spawn(function()
 			local seconds = remain % 60
 
 			keyTimer.Text =
-				"Nhập lại key sau: "
+				"KEY: "
 				..minutes.."m "
 				..seconds.."s"
 
@@ -765,7 +765,7 @@ local function createIntro()
 
 		"- Script tổng hợp các bản Attack on Titan.\n" ..
 		"- Update Key New Vào Tuần Sau.\n" ..
-		" https://discord.gg/9YFPhZbwmD"
+		" Sài thông minh để không bị band shadow nhá"
 
 	text.TextColor3 = Color3.new(1,1,1)
 	text.Font = Enum.Font.Gotham
@@ -776,10 +776,6 @@ createIntro()
 
 mainTab.Visible = true
 tabs["🏠 Main"].Button.BackgroundColor3 = Color3.fromRGB(90,60,150)
-
---==================================================
--- TOGGLE MENU FIXED
---==================================================
 
 local opened = true
 
