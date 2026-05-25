@@ -765,9 +765,8 @@ local function createIntro()
 
 		"- Script tổng hợp các bản Attack on Titan.\n" ..
 		"- Update Key New Vào Tuần Sau.\n" ..
-		" Cách sài không band shadow"
-        "GIẢM TỐC ĐỘ BAY THẤP NHẤT"
-        "GIẢM TỐC ĐÁNH VÀ ĐỘ CAO KHI ĐÁNH"
+		"Sài thông minh để không bị band shadow nha.\n" ..
+
 	text.TextColor3 = Color3.new(1,1,1)
 	text.Font = Enum.Font.Gotham
 	text.TextSize = 14
