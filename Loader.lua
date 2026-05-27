@@ -3,6 +3,7 @@ local TweenService = game:GetService("TweenService")
 
 local player = Players.LocalPlayer
 local PlayerGui = player:WaitForChild("PlayerGui")
+
 local KEY = "mtanbatocom"
 
 local KEY_SAVE = "MTSENKAI_KEYTIME"
@@ -1003,7 +1004,6 @@ createButton(utilsTab,"Xóa Hiệu Ứng",128,function()
 
 			end
 
-			blur / bloom / color correction
 			if v:IsA("BlurEffect")
 			or v:IsA("BloomEffect")
 			or v:IsA("ColorCorrectionEffect")
@@ -1157,6 +1157,7 @@ end)
 task.wait(2)
 enableAntiAFK()
 
+
 local function createIntro()
 
 	local info = Instance.new("Frame")
@@ -1242,6 +1243,7 @@ local function toggleMenu()
 
 	opened = not opened
 
+	-- animation nhỏ
 	TweenService:Create(toggle,TweenInfo.new(0.08),{
 		Size = UDim2.new(0,46,0,46)
 	}):Play()
@@ -1252,6 +1254,7 @@ local function toggleMenu()
 		Size = UDim2.new(0,52,0,52)
 	}):Play()
 
+	-- mở tắt menu
 	main.Visible = opened
 
 	task.wait(0.1)
