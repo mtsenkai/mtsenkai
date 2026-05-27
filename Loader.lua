@@ -4,7 +4,15 @@ local TweenService = game:GetService("TweenService")
 local player = Players.LocalPlayer
 local PlayerGui = player:WaitForChild("PlayerGui")
 
+--==================================================
+-- KEY SYSTEM
+--==================================================
+
 local KEY = "mtanbatocom"
+
+--==================================================
+-- KEY TIME SYSTEM
+--==================================================
 
 local KEY_SAVE = "MTSENKAI_KEYTIME"
 
@@ -55,14 +63,26 @@ local function keyStillValid()
 
 end
 
+--==================================================
+-- XÓA GUI CŨ
+--==================================================
+
 if PlayerGui:FindFirstChild("ModernKeyMenu") then
 	PlayerGui.ModernKeyMenu:Destroy()
 end
+
+--==================================================
+-- GUI
+--==================================================
 
 local gui = Instance.new("ScreenGui")
 gui.Name = "ModernKeyMenu"
 gui.ResetOnSpawn = false
 gui.Parent = PlayerGui
+
+--==================================================
+-- NÚT MENU ICON (FIX MOBILE + AUTO HIDE KEY)
+--==================================================
 
 local TweenService = game:GetService("TweenService")
 local ContentProvider = game:GetService("ContentProvider")
@@ -84,23 +104,43 @@ toggle.Active = true
 toggle.Selectable = true
 toggle.ZIndex = 999
 
+--==================================================
+-- PRELOAD ICON
+--==================================================
+
 pcall(function()
 	ContentProvider:PreloadAsync({toggle})
 end)
 
 toggle.ImageTransparency = 0
 
+--==================================================
+-- FIX MOBILE
+--==================================================
+
 toggle.ScaleType = Enum.ScaleType.Stretch
 toggle.ResampleMode = Enum.ResamplerMode.Pixelated
+
+--==================================================
+-- BO GÓC
+--==================================================
 
 local toggleCorner = Instance.new("UICorner")
 toggleCorner.CornerRadius = UDim.new(0,12)
 toggleCorner.Parent = toggle
 
+--==================================================
+-- VIỀN
+--==================================================
+
 local toggleStroke = Instance.new("UIStroke")
 toggleStroke.Parent = toggle
 toggleStroke.Color = Color3.fromRGB(100,70,170)
 toggleStroke.Thickness = 1.5
+
+--==================================================
+-- FORCE REFRESH MOBILE
+--==================================================
 
 task.spawn(function()
 
@@ -112,6 +152,10 @@ task.spawn(function()
 	toggle.Image = "rbxassetid://121818343044982"
 
 end)
+
+--==================================================
+-- HOVER PC
+--==================================================
 
 toggle.MouseEnter:Connect(function()
 
@@ -128,6 +172,10 @@ toggle.MouseLeave:Connect(function()
 	}):Play()
 
 end)
+
+--==================================================
+-- KEY FRAME
+--==================================================
 
 local keyFrame = Instance.new("Frame")
 keyFrame.Parent = gui
@@ -185,6 +233,10 @@ checkButton.TextSize = 15
 
 Instance.new("UICorner", checkButton).CornerRadius = UDim.new(0,8)
 
+--==================================================
+-- INTRO
+--==================================================
+
 local intro = Instance.new("Frame")
 intro.Parent = gui
 intro.Size = UDim2.new(0,340,0,180)
@@ -230,11 +282,16 @@ continueButton.TextSize = 15
 
 Instance.new("UICorner", continueButton).CornerRadius = UDim.new(0,10)
 
+--==================================================
+-- MODERN LOADING SCREEN
+--==================================================
+
 local loadingFrame = Instance.new("Frame")
 loadingFrame.Parent = gui
 loadingFrame.Size = UDim2.new(1,0,1,0)
-loadingFrame.BackgroundColor3 = Color3.fromRGB(0,0,0)
-loadingFrame.BackgroundTransparency = 0.25
+
+-- XÓA NỀN ĐEN
+loadingFrame.BackgroundTransparency = 1
 loadingFrame.Visible = false
 
 local blur = Instance.new("BlurEffect")
@@ -245,7 +302,10 @@ local loadBox = Instance.new("Frame")
 loadBox.Parent = loadingFrame
 loadBox.Size = UDim2.new(0,340,0,170)
 loadBox.Position = UDim2.new(0.5,-170,0.5,-85)
+
+-- nền box tím đen nhẹ
 loadBox.BackgroundColor3 = Color3.fromRGB(20,20,20)
+loadBox.BackgroundTransparency = 0.15
 
 Instance.new("UICorner",loadBox).CornerRadius = UDim.new(0,14)
 
@@ -268,7 +328,7 @@ loadingTitle.Size = UDim2.new(1,-100,0,30)
 loadingTitle.Position = UDim2.new(0,95,0,45)
 
 loadingTitle.BackgroundTransparency = 1
-loadingTitle.Text = "MinhTrieu Loading"
+loadingTitle.Text = "⚡ MinhTrieu Loading ⚡"
 loadingTitle.TextColor3 = Color3.new(1,1,1)
 loadingTitle.Font = Enum.Font.GothamBold
 loadingTitle.TextSize = 22
@@ -373,6 +433,10 @@ local function startLoading()
 
 end
 
+--==================================================
+-- MAIN MENU
+--==================================================
+
 local main = Instance.new("Frame")
 main.Parent = gui
 main.Size = UDim2.new(0,430,0,260)
@@ -388,6 +452,10 @@ mainStroke.Parent = main
 mainStroke.Color = Color3.fromRGB(125,85,255)
 mainStroke.Thickness = 1.8
 
+--==================================================
+-- SIDE MENU
+--==================================================
+
 local TweenService = game:GetService("TweenService")
 
 local side = Instance.new("Frame")
@@ -398,6 +466,7 @@ side.BorderSizePixel = 0
 
 Instance.new("UICorner", side).CornerRadius = UDim.new(0,12)
 
+-- gradient nền
 local sideGradient = Instance.new("UIGradient")
 sideGradient.Parent = side
 sideGradient.Color = ColorSequence.new{
@@ -405,6 +474,10 @@ sideGradient.Color = ColorSequence.new{
 	ColorSequenceKeypoint.new(1, Color3.fromRGB(40,20,55))
 }
 sideGradient.Rotation = 90
+
+--==================================================
+-- TEXT CONG
+--==================================================
 
 local textHolder = Instance.new("Frame")
 textHolder.Parent = side
@@ -424,6 +497,7 @@ for i = 1,#word do
 	letter.BackgroundTransparency = 1
 	letter.Size = UDim2.new(0,18,0,30)
 
+	-- vị trí cong
 	local x = 8 + (i-1)*12
 	local curve = math.sin(i*0.55) * 8
 
@@ -435,11 +509,13 @@ for i = 1,#word do
 	letter.Font = Enum.Font.GothamBlack
 	letter.Rotation = curve * 1.5
 
+	-- glow
 	local stroke = Instance.new("UIStroke")
 	stroke.Parent = letter
 	stroke.Thickness = 2
 	stroke.Color = Color3.fromRGB(170,85,255)
 
+	-- gradient chữ
 	local grad = Instance.new("UIGradient")
 	grad.Parent = letter
 	grad.Color = ColorSequence.new{
@@ -456,6 +532,10 @@ for i = 1,#word do
 	})
 
 end
+
+--==================================================
+-- ANIMATION
+--==================================================
 
 task.spawn(function()
 
@@ -540,6 +620,9 @@ task.spawn(function()
 	end
 
 end)
+--==================================================
+-- PLAYER AVATAR MINI
+--==================================================
 
 local userId = player.UserId
 
@@ -581,6 +664,10 @@ avatar.ScaleType = Enum.ScaleType.Crop
 
 Instance.new("UICorner", avatar).CornerRadius = UDim.new(1,0)
 
+--==================================================
+-- KEY TIMER TEXT
+--==================================================
+
 local keyTimer = Instance.new("TextLabel")
 keyTimer.Parent = side
 keyTimer.Size = UDim2.new(1,-10,0,20)
@@ -620,6 +707,10 @@ task.spawn(function()
 
 end)
 
+--==================================================
+-- CONTENT
+--==================================================
+
 local content = Instance.new("Frame")
 content.Parent = main
 content.Position = UDim2.new(0,130,0,0)
@@ -629,6 +720,10 @@ content.BackgroundColor3 = Color3.fromRGB(8,8,8)
 content.BorderSizePixel = 0
 
 Instance.new("UICorner", content).CornerRadius = UDim.new(0,12)
+
+--==================================================
+-- BACKGROUND IMAGE (FIX MOBILE)
+--==================================================
 
 local ContentProvider = game:GetService("ContentProvider")
 
@@ -643,18 +738,24 @@ bgImage.Size = UDim2.new(1,0,1,0)
 bgImage.BackgroundTransparency = 1
 bgImage.Image = "rbxassetid://72093801276619"
 
+-- preload ảnh
 pcall(function()
 	ContentProvider:PreloadAsync({bgImage})
 end)
 
 bgImage.ImageTransparency = 0.4
 
+-- FIX MOBILE
 bgImage.ScaleType = Enum.ScaleType.Stretch
 bgImage.ResampleMode = Enum.ResamplerMode.Pixelated
 
 local bgCorner = Instance.new("UICorner")
 bgCorner.CornerRadius = UDim.new(0,12)
 bgCorner.Parent = bgImage
+
+--==================================================
+-- OVERLAY
+--==================================================
 
 local darkOverlay = Instance.new("Frame")
 darkOverlay.Parent = content
@@ -668,6 +769,10 @@ local overlayCorner = Instance.new("UICorner")
 overlayCorner.CornerRadius = UDim.new(0,12)
 overlayCorner.Parent = darkOverlay
 
+--==================================================
+-- FORCE REFRESH MOBILE
+--==================================================
+
 task.spawn(function()
 
 	task.wait(0.5)
@@ -679,6 +784,10 @@ task.spawn(function()
 
 end)
 
+--==================================================
+-- TAB SYSTEM
+--==================================================
+
 local tabs = {}
 
 local function createTab(name,y)
@@ -688,6 +797,7 @@ local function createTab(name,y)
 	button.Size = UDim2.new(1,-10,0,34)
 	button.Position = UDim2.new(0,5,0,y)
 
+	-- NỀN ĐEN MỜ
 	button.BackgroundColor3 = Color3.fromRGB(8,8,8)
 	button.BackgroundTransparency = 0.25
 
@@ -698,12 +808,14 @@ local function createTab(name,y)
 
 	Instance.new("UICorner", button).CornerRadius = UDim.new(0,8)
 
+	-- VIỀN TRẮNG
 	local stroke = Instance.new("UIStroke")
 	stroke.Parent = button
 	stroke.Color = Color3.fromRGB(255,255,255)
 	stroke.Transparency = 0.45
 	stroke.Thickness = 1
 
+	-- PAGE SCROLL
 	local page = Instance.new("ScrollingFrame")
 	page.Parent = content
 	page.Size = UDim2.new(1,0,1,0)
@@ -764,9 +876,17 @@ local function createTab(name,y)
 	return page
 end
 
+--==================================================
+-- CREATE TABS
+--==================================================
+
 local mainTab = createTab("🏠 Main",105)
 local utilsTab = createTab("⚡ Player",145)
 local settingsTab = createTab("⚙ Settings",65)
+
+--==================================================
+-- BUTTON CREATOR
+--==================================================
 
 local function createButton(parent,text,y,callback)
 
@@ -774,6 +894,7 @@ local function createButton(parent,text,y,callback)
 	holder.Parent = parent
 	holder.Size = UDim2.new(1,-35,0,32)
 
+	-- NỀN ĐEN MỜ
 	holder.BackgroundColor3 = Color3.fromRGB(8,8,8)
 	holder.BackgroundTransparency = 0.25
 
@@ -782,6 +903,7 @@ local function createButton(parent,text,y,callback)
 
 	Instance.new("UICorner", holder).CornerRadius = UDim.new(0,8)
 
+	-- VIỀN TRẮNG
 	local stroke = Instance.new("UIStroke")
 	stroke.Parent = holder
 	stroke.Color = Color3.fromRGB(255,255,255)
@@ -809,6 +931,7 @@ local function createButton(parent,text,y,callback)
 	icon.TextSize = 12
 	icon.Font = Enum.Font.GothamBold
 
+	-- HOVER
 	btn.MouseEnter:Connect(function()
 
 		TweenService:Create(holder,TweenInfo.new(0.15),{
@@ -831,6 +954,9 @@ local function createButton(parent,text,y,callback)
 
 	return btn
 end
+--==================================================
+-- MAIN TAB
+--==================================================
 
 createButton(mainTab,"AirFlow Hub",48,function()
 
@@ -886,6 +1012,9 @@ createButton(mainTab,"Lemon Hub",348,function()
         print("Lemon Hub Script")
 loadstring(game:HttpGet("https://lemonhub.xyz/panel/script"))()
 end)
+--==================================================
+-- UTILS TAB
+--==================================================
 
 local lowGraphics = false
 local savedMaterials = {}
@@ -896,12 +1025,14 @@ createButton(utilsTab,"Giảm Độ Họa",48,function()
 
 	if lowGraphics then
 
+		-- lighting
 		game.Lighting.GlobalShadows = false
 		game.Lighting.FogEnd = 100000
 		settings().Rendering.QualityLevel = Enum.QualityLevel.Level01
 
 		for _,v in pairs(workspace:GetDescendants()) do
 
+			-- hiệu ứng
 			if v:IsA("ParticleEmitter")
 			or v:IsA("Trail")
 			or v:IsA("Smoke")
@@ -911,18 +1042,21 @@ createButton(utilsTab,"Giảm Độ Họa",48,function()
 				v.Enabled = false
 			end
 
+			-- texture
 			if v:IsA("Texture")
 			or v:IsA("Decal") then
 
 				v.Transparency = 1
 			end
 
+			-- mesh
 			if v:IsA("SpecialMesh") then
 
 				v.TextureId = ""
 
 			end
 
+			-- part
 			if v:IsA("BasePart") then
 
 				savedMaterials[v] = v.Material
@@ -983,6 +1117,7 @@ createButton(utilsTab,"Xóa Hiệu Ứng",128,function()
 
 		for _,v in pairs(workspace:GetDescendants()) do
 
+			-- lưu trạng thái cũ
 			if v:IsA("ParticleEmitter")
 			or v:IsA("Trail")
 			or v:IsA("Smoke")
@@ -995,6 +1130,7 @@ createButton(utilsTab,"Xóa Hiệu Ứng",128,function()
 
 			end
 
+			-- hiệu ứng ánh sáng
 			if v:IsA("PointLight")
 			or v:IsA("SpotLight")
 			or v:IsA("SurfaceLight") then
@@ -1004,6 +1140,7 @@ createButton(utilsTab,"Xóa Hiệu Ứng",128,function()
 
 			end
 
+			-- blur / bloom / color correction
 			if v:IsA("BlurEffect")
 			or v:IsA("BloomEffect")
 			or v:IsA("ColorCorrectionEffect")
@@ -1056,6 +1193,9 @@ end)
 local antiAFK = false
 local antiAFKConnection
 
+--==================================================
+-- NOTIFICATION ĐẸP (NHỎ + FADE + BO GÓC)
+--==================================================
 local function showTopNotification(text)
 
 	local player = game.Players.LocalPlayer
@@ -1097,12 +1237,14 @@ local function showTopNotification(text)
 	label.TextTransparency = 1
 	label.Parent = frame
 
+	-- FADE IN
 	for i = 1, 10 do
 		frame.BackgroundTransparency = 1 - (i * 0.1)
 		label.TextTransparency = 1 - (i * 0.1)
 		task.wait(0.01)
 	end
 
+	-- AUTO DELETE SAU 2 GIÂY (FADE OUT)
 	task.delay(2, function()
 		for i = 1, 10 do
 			frame.BackgroundTransparency = i * 0.1
@@ -1113,6 +1255,9 @@ local function showTopNotification(text)
 	end)
 end
 
+--==================================================
+-- BẬT ANTI AFK
+--==================================================
 local function enableAntiAFK()
 
 	if antiAFK then return end
@@ -1131,6 +1276,9 @@ local function enableAntiAFK()
 	print("Anti AFK ON")
 end
 
+--==================================================
+-- TẮT ANTI AFK
+--==================================================
 local function disableAntiAFK()
 
 	if antiAFKConnection then
@@ -1144,6 +1292,9 @@ local function disableAntiAFK()
 	print("Anti AFK OFF")
 end
 
+--==================================================
+-- NÚT BẤM
+--==================================================
 createButton(utilsTab, "Chống AFK", 50, function()
 
 	if antiAFK then
@@ -1154,9 +1305,15 @@ createButton(utilsTab, "Chống AFK", 50, function()
 
 end)
 
+--==================================================
+-- AUTO BẬT KHI VÀO GAME
+--==================================================
 task.wait(2)
 enableAntiAFK()
 
+--==================================================
+-- GIỚI THIỆU (CENTER GIỮA MENU)
+--==================================================
 
 local function createIntro()
 
@@ -1165,6 +1322,7 @@ local function createIntro()
 
 	info.Size = UDim2.new(1,-35,0,185)
 
+	-- FRAME NẰM GIỮA MENU
 	info.AnchorPoint = Vector2.new(0.5,0.5)
 	info.Position = UDim2.new(0.5,0,0.5,0)
 
@@ -1174,17 +1332,20 @@ local function createIntro()
 
 	Instance.new("UICorner", info).CornerRadius = UDim.new(0,14)
 
+	-- VIỀN TRẮNG MỜ
 	local infoStroke = Instance.new("UIStroke")
 	infoStroke.Parent = info
 	infoStroke.Color = Color3.fromRGB(255,255,255)
 	infoStroke.Thickness = 1.2
 	infoStroke.Transparency = 0.45
 
+	-- TITLE
 	local title = Instance.new("TextLabel")
 	title.Parent = info
 
 	title.Size = UDim2.new(1,0,0,35)
 
+	-- TITLE HẠ XUỐNG GIỮA
 	title.Position = UDim2.new(0,0,0,18)
 
 	title.BackgroundTransparency = 1
@@ -1194,17 +1355,20 @@ local function createIntro()
 	title.Font = Enum.Font.GothamBlack
 	title.TextSize = 24
 
+	-- TEXT
 	local text = Instance.new("TextLabel")
 	text.Parent = info
 
 	text.Size = UDim2.new(1,-40,0,110)
 
+	-- TEXT HẠ XUỐNG THÊM
 	text.Position = UDim2.new(0,20,0,62)
 
 	text.BackgroundTransparency = 1
 
 	text.TextWrapped = true
 
+	-- CHỮ CĂN GIỮA
 	text.TextXAlignment = Enum.TextXAlignment.Center
 	text.TextYAlignment = Enum.TextYAlignment.Center
 
@@ -1213,7 +1377,7 @@ local function createIntro()
 
 		"- Script tổng hợp các bản Attack on Titan.\n\n" ..
 		"- Update Key New Vào Tuần Sau.\n\n" ..
-		"YT mtsenkai"
+		"discord.gg/9YFPhZbwmD"
 
 	text.TextColor3 = Color3.new(1,1,1)
 	text.Font = Enum.Font.Gotham
@@ -1223,9 +1387,17 @@ end
 
 createIntro()
 
+--==================================================
+-- DEFAULT TAB
+--==================================================
+
 mainTab.Visible = true
 tabs["🏠 Main"].Button.BackgroundColor3 = Color3.fromRGB(90,60,150)
 tabs["🏠 Main"].Button.BackgroundTransparency = 0
+
+--==================================================
+-- TOGGLE MENU FIXED
+--==================================================
 
 local opened = true
 
@@ -1265,6 +1437,9 @@ end
 
 toggle.MouseButton1Click:Connect(toggleMenu)
 
+--==================================================
+-- LOADING FUNCTION
+--==================================================
 local circle = Instance.new("ImageLabel")
 local function startLoading()
 
@@ -1360,6 +1535,10 @@ local function startLoading()
 
 end
 
+--==================================================
+-- CHECK KEY
+--==================================================
+
 checkButton.MouseButton1Click:Connect(function()
 
 	if keyBox.Text == KEY then
@@ -1383,6 +1562,10 @@ checkButton.MouseButton1Click:Connect(function()
 	end
 
 end)
+
+--==================================================
+-- AUTO BYPASS KEY IF STILL VALID
+--==================================================
 
 if keyStillValid() then
 
