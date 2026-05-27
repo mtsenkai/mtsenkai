@@ -1213,7 +1213,7 @@ local function createIntro()
 
 		"- Script tổng hợp các bản Attack on Titan.\n\n" ..
 		"- Update Key New Vào Tuần Sau.\n\n" ..
-		"discord.gg/9YFPhZbwmD"
+		"YT mtsenkai"
 
 	text.TextColor3 = Color3.new(1,1,1)
 	text.Font = Enum.Font.Gotham
