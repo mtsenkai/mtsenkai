@@ -889,6 +889,12 @@ createButton(mainTab,"Lemon Hub",348,function()
 loadstring(game:HttpGet("https://lemonhub.xyz/panel/script"))()
 end)
 
+createButton(mainTab,"Hitbox Hub",388,function()
+
+        print("Hitbox Hub Script")
+loadstring(game:HttpGet("https://rawscripts.net/raw/Attack-on-Titan-Revolution-Nape-Expander-51108"))()
+end)
+
 local lowGraphics = false
 local savedMaterials = {}
 
@@ -1256,7 +1262,6 @@ local function toggleMenu()
 		Size = UDim2.new(0,52,0,52)
 	}):Play()
 
-	-- mở tắt menu
 	main.Visible = opened
 
 	task.wait(0.1)
