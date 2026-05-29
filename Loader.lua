@@ -895,6 +895,12 @@ createButton(mainTab,"Hitbox Hub",388,function()
 loadstring(game:HttpGet("https://rawscripts.net/raw/Attack-on-Titan-Revolution-Nape-Expander-51108"))()
 end)
 
+createButton(mainTab,"Tekkit Hub",428,function()
+
+        print("Tekkit Hub Script")
+loadstring(game:HttpGet("https://api.luarmor.net/files/v4/loaders/705e7fe7aa288f0fe86900cedb1119b1.lua"))()
+end)
+
 local lowGraphics = false
 local savedMaterials = {}
 
