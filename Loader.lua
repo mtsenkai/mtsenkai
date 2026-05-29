@@ -606,7 +606,7 @@ task.spawn(function()
 			local seconds = remain % 60
 
 			keyTimer.Text =
-				"Key hết sau: "
+				"Key: "
 				..minutes.."m "
 				..seconds.."s"
 
