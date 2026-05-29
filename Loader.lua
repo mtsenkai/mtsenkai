@@ -67,7 +67,7 @@ gui.Parent = PlayerGui
 local TweenService = game:GetService("TweenService")
 local ContentProvider = game:GetService("ContentProvider")
 
-local toggle = Instance.new("ImageButton")
+local toggle = Instance.new("TextButton")
 toggle.Name = "MenuToggle"
 toggle.Parent = gui
 
@@ -78,45 +78,111 @@ toggle.BackgroundColor3 = Color3.fromRGB(18,18,18)
 toggle.AutoButtonColor = false
 toggle.BorderSizePixel = 0
 
-toggle.Image = "rbxassetid://121818343044982"
+toggle.Text = "T"
+toggle.TextColor3 = Color3.fromRGB(235,235,235)
+toggle.TextSize = 28
+toggle.Font = Enum.Font.Cartoon
 
 toggle.Active = true
 toggle.Selectable = true
 toggle.ZIndex = 999
 
-pcall(function()
-	ContentProvider:PreloadAsync({toggle})
-end)
-
-toggle.ImageTransparency = 0
-
-toggle.ScaleType = Enum.ScaleType.Stretch
-toggle.ResampleMode = Enum.ResamplerMode.Pixelated
-
 local toggleCorner = Instance.new("UICorner")
-toggleCorner.CornerRadius = UDim.new(0,12)
 toggleCorner.Parent = toggle
+toggleCorner.CornerRadius = UDim.new(0,12)
 
 local toggleStroke = Instance.new("UIStroke")
 toggleStroke.Parent = toggle
-toggleStroke.Color = Color3.fromRGB(100,70,170)
+toggleStroke.Color = Color3.fromRGB(70,70,70)
 toggleStroke.Thickness = 1.5
+toggle.ClipsDescendants = true
+
+local starHolder = Instance.new("Frame")
+starHolder.Parent = toggle
+starHolder.Size = UDim2.new(1,0,1,0)
+starHolder.BackgroundTransparency = 1
+starHolder.ClipsDescendants = true
+starHolder.ZIndex = toggle.ZIndex + 1
+
+local holderCorner = Instance.new("UICorner")
+holderCorner.CornerRadius = UDim.new(0,12)
+holderCorner.Parent = starHolder
+
+local function createStar()
+
+	local star = Instance.new("TextLabel")
+	star.Parent = starHolder
+
+	star.BackgroundTransparency = 1
+	star.BorderSizePixel = 0
+
+	star.Text = "⚡"
+	star.Font = Enum.Font.GothamBold
+	star.TextSize = 7
+
+	star.TextColor3 = Color3.fromRGB(255,255,255)
+
+	star.Size = UDim2.new(0,8,0,8)
+
+	local startX = math.random(6,40)
+
+	star.Position = UDim2.new(
+		0,
+		startX,
+		0,
+		-4
+	)
+
+	star.Rotation = math.random(-25,25)
+
+	star.ZIndex = toggle.ZIndex + 2
+
+	local tween = TweenService:Create(
+		star,
+		TweenInfo.new(
+			1.6,
+			Enum.EasingStyle.Linear,
+			Enum.EasingDirection.Out
+		),
+		{
+			Position = UDim2.new(
+				0,
+				startX + math.random(-3,3),
+				0,
+				40
+			),
+
+			TextTransparency = 1,
+			Rotation = star.Rotation + math.random(-15,15)
+		}
+	)
+
+	tween:Play()
+
+	tween.Completed:Connect(function()
+
+		star:Destroy()
+
+	end)
+
+end
 
 task.spawn(function()
 
-	task.wait(0.5)
+	while toggle.Parent do
 
-	toggle.Image = ""
-	task.wait()
+		createStar()
 
-	toggle.Image = "rbxassetid://121818343044982"
+		task.wait(0.08)
+
+	end
 
 end)
 
 toggle.MouseEnter:Connect(function()
 
 	TweenService:Create(toggle,TweenInfo.new(0.15),{
-		BackgroundColor3 = Color3.fromRGB(35,25,50)
+		BackgroundColor3 = Color3.fromRGB(28,28,28)
 	}):Play()
 
 end)
@@ -1257,16 +1323,15 @@ local function toggleMenu()
 
 	opened = not opened
 
-	-- animation nhỏ
 	TweenService:Create(toggle,TweenInfo.new(0.08),{
-		Size = UDim2.new(0,46,0,46)
-	}):Play()
+	    Size = UDim2.new(0,48,0,48)
+        }):Play()
 
-	task.wait(0.08)
+        task.wait(0.08)
 
-	TweenService:Create(toggle,TweenInfo.new(0.08),{
-		Size = UDim2.new(0,52,0,52)
-	}):Play()
+        TweenService:Create(toggle,TweenInfo.new(0.08),{
+	    Size = UDim2.new(0,52,0,52)
+        }):Play()
 
 	main.Visible = opened
 
