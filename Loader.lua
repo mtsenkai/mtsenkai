@@ -80,7 +80,7 @@ toggle.BorderSizePixel = 0
 
 toggle.Text = "T"
 toggle.TextColor3 = Color3.fromRGB(235,235,235)
-toggle.TextSize = 28
+toggle.TextSize = 38
 toggle.Font = Enum.Font.Cartoon
 
 toggle.Active = true
